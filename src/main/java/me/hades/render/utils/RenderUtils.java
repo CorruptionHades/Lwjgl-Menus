@@ -25,8 +25,17 @@ public class RenderUtils {
         glVertex3f(x + width, y + height, 0.0f); // set the position of the third vertex
         glVertex3f(x, y + height, 0.0f); // set the position of the fourth vertex
         glEnd(); // end drawing the square
+    }
 
-
+     public static void drawString(String text, int x, int y, Color color) {
+        GL11.glEnable(3042);
+        GL11.glBlendFunc(770, 771);
+        GL11.glPushMatrix();
+        Font awtFont = new Font("default", 0, 20);
+        TrueTypeFont font = new TrueTypeFont(awtFont, true);
+        FontUtils.drawString(font, text, 1, x, y, 10, color);
+        GL11.glDisable(3553);
+        GL11.glPopMatrix();
     }
 
     public static void drawSquarePixel(float x, float y, float width, float height, Color color) {
