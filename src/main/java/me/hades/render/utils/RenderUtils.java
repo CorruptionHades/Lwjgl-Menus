@@ -105,13 +105,6 @@ public class RenderUtils {
     }
 
     public static void drawSquare(float x, float y, float size, Color color) {
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        //GLU.gluOrtho2D(0, Window.getWidth(), Window.getHeight(), 0);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-
         glColor3f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f); // Set the color
         glBegin(GL_QUADS);
         glVertex2f(x, y); // Top-left vertex
