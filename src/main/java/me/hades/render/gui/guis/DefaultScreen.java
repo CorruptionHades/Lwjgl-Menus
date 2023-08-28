@@ -27,7 +27,7 @@ public class DefaultScreen extends GuiScreen {
 
         RenderUtils.drawTriangle(380, 50, 440, 50, 410, 20);
 
-        RenderUtils.drawRectWithRoundedCorners(500, 20, 50, 50, Color.CYAN, 10);
+        RenderUtils.drawFilledRoundedRect(500, 20, 50, 50, Color.CYAN, 5);
 
         RenderUtils.drawTexturedRect(600, 20, 50, 50, stoneTexture);
     }

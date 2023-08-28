@@ -151,19 +151,7 @@ public class RenderUtils {
      * @param color Color of the rectangle
      * @param cornerRadius Radius of the corners
      */
-    public static void drawRectWithRoundedCorners(float x, float y, float width, float height, Color color, float cornerRadius) {
-        // Disable blending
-        glDisable(GL_BLEND);
-        // Turn on anti-aliasing
-        glEnable(GL_POINT_SMOOTH);
-        // Enable use of alpha function
-        glEnable(GL_ALPHA_TEST);
-        // Alpha comparison
-        glAlphaFunc(GL_GREATER, 0.5f);
-
-        // Set the line width for drawing corners
-        glLineWidth(2.0f);
-
+    public static void drawFilledRoundedRect(float x, float y, float width, float height, Color color, float cornerRadius) {
         // Set the color
         glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
 
@@ -175,52 +163,58 @@ public class RenderUtils {
         glVertex2f(x + cornerRadius, y + height);
         glEnd();
 
-        // Draw the rounded corners using circles
-        for (int i = 0; i < 4; i++) {
-            float centerX, centerY;
-
-            if (i == 0) {
-                centerX = x + cornerRadius;
-                centerY = y + cornerRadius;
-            } else if (i == 1) {
-                centerX = x + width - cornerRadius;
-                centerY = y + cornerRadius;
-            } else if (i == 2) {
-                centerX = x + cornerRadius;
-                centerY = y + height - cornerRadius;
-            } else {
-                centerX = x + width - cornerRadius;
-                centerY = y + height - cornerRadius;
-            }
-
-            glBegin(GL_LINE_LOOP);
-            for (int j = 0; j < 360; j++) {
-                float angle = (float) Math.toRadians(j);
-                float xVertex = centerX + (float) Math.cos(angle) * cornerRadius;
-                float yVertex = centerY + (float) Math.sin(angle) * cornerRadius;
-                glVertex2f(xVertex, yVertex);
-            }
-            glEnd();
-        }
-
         // Draw the horizontal and vertical lines
-        glBegin(GL_LINES);
-        glVertex2f(x + cornerRadius, y);
-        glVertex2f(x + width - cornerRadius, y);
-
-        glVertex2f(x + cornerRadius, y + height);
-        glVertex2f(x + width - cornerRadius, y + height);
-
+        glBegin(GL_QUADS);
         glVertex2f(x, y + cornerRadius);
+        glVertex2f(x + cornerRadius, y + cornerRadius);
+        glVertex2f(x + cornerRadius, y + height - cornerRadius);
         glVertex2f(x, y + height - cornerRadius);
 
+        glVertex2f(x + width - cornerRadius, y + cornerRadius);
         glVertex2f(x + width, y + cornerRadius);
         glVertex2f(x + width, y + height - cornerRadius);
+        glVertex2f(x + width - cornerRadius, y + height - cornerRadius);
         glEnd();
 
-        glDisable(GL_ALPHA_TEST);
-        glDisable(GL_POINT_SMOOTH);
+        // Draw the rounded corners using circles
+        glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+        glBegin(GL_TRIANGLE_FAN);
+        for (int i = 0; i <= 360; i++) {
+            float angle = (float) Math.toRadians(i);
+            float xVertex = x + cornerRadius + (float) Math.cos(angle) * cornerRadius;
+            float yVertex = y + cornerRadius + (float) Math.sin(angle) * cornerRadius;
+            glVertex2f(xVertex, yVertex);
+        }
+        glEnd();
+
+        glBegin(GL_TRIANGLE_FAN);
+        for (int i = 0; i <= 360; i++) {
+            float angle = (float) Math.toRadians(i);
+            float xVertex = x + width - cornerRadius + (float) Math.cos(angle) * cornerRadius;
+            float yVertex = y + cornerRadius + (float) Math.sin(angle) * cornerRadius;
+            glVertex2f(xVertex, yVertex);
+        }
+        glEnd();
+
+        glBegin(GL_TRIANGLE_FAN);
+        for (int i = 0; i <= 360; i++) {
+            float angle = (float) Math.toRadians(i);
+            float xVertex = x + width - cornerRadius + (float) Math.cos(angle) * cornerRadius;
+            float yVertex = y + height - cornerRadius + (float) Math.sin(angle) * cornerRadius;
+            glVertex2f(xVertex, yVertex);
+        }
+        glEnd();
+
+        glBegin(GL_TRIANGLE_FAN);
+        for (int i = 0; i <= 360; i++) {
+            float angle = (float) Math.toRadians(i);
+            float xVertex = x + cornerRadius + (float) Math.cos(angle) * cornerRadius;
+            float yVertex = y + height - cornerRadius + (float) Math.sin(angle) * cornerRadius;
+            glVertex2f(xVertex, yVertex);
+        }
+        glEnd();
     }
+
 
 
 }
