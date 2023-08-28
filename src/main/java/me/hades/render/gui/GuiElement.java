@@ -20,4 +20,16 @@ public abstract class GuiElement {
     public abstract void mouseReleased(double x, double y, int button);
 
     public abstract void keyPressed(char key, int keyCode);
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public boolean isInside(double mouseX, double mouseY, float x, float y, float width, float height) {
+        return (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height);
+    }
 }

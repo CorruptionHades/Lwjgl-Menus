@@ -1,6 +1,8 @@
 package me.hades.render.utils;
 
 import me.hades.render.render.Window;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.util.FontUtils;
 
 import java.awt.*;
 
@@ -15,6 +17,14 @@ public class RenderUtils {
         glMatrixMode(GL_PROJECTION);
     }
 
+    /**
+     * Draw a square on the screen.
+     * @param x X position of the square
+     * @param y Y position of the square
+     * @param width Width of the square
+     * @param height Height of the square
+     * @param color Color of the square
+     */
     public static void drawSquare(float x, float y, float width, float height, Color color) {
         enableStuff();
 
@@ -27,25 +37,30 @@ public class RenderUtils {
         glEnd(); // end drawing the square
     }
 
+    /**
+     * Draw a string on the screen.
+     * @param text The text to draw
+     * @param x X position of the text
+     * @param y Y position of the text
+     * @param color Color of the text
+     */
      public static void drawString(String text, int x, int y, Color color) {
-        GL11.glEnable(3042);
-        GL11.glBlendFunc(770, 771);
-        GL11.glPushMatrix();
-        Font awtFont = new Font("default", 0, 20);
+        glEnable(3042);
+        glBlendFunc(770, 771);
+        glPushMatrix();
+        Font awtFont = new Font("default", Font.PLAIN, 20);
         TrueTypeFont font = new TrueTypeFont(awtFont, true);
-        FontUtils.drawString(font, text, 1, x, y, 10, color);
-        GL11.glDisable(3553);
-        GL11.glPopMatrix();
+        FontUtils.drawString(font, text, 1, x, y, 10, new org.newdawn.slick.Color(color.getRed(), color.getGreen(), color.getBlue()));
+        glDisable(3553);
+        glPopMatrix();
     }
 
-    public static void drawSquarePixel(float x, float y, float width, float height, Color color) {
-        float xPercent = (float) (x / Window.getWidth());
-        float yPercent = (float) (y / Window.getHeight());
-        float widthPercent = (float) (width / Window.getWidth());
-        float heightPercent = (float) (height / Window.getHeight());
-        drawSquare(xPercent, yPercent, widthPercent, heightPercent, color);
-    }
-
+    /**
+     * Draw a circle on the screen.
+     * @param x X position of the circle
+     * @param y Y position of the circle
+     * @param radius Radius of the circle
+     */
     public static void drawCircle(float x, float y, float radius) {
         // Draw a circle with the given x, y, and radius
         int numSegments = 32;
@@ -59,6 +74,15 @@ public class RenderUtils {
         glEnd();
     }
 
+    /**
+     * Draw a triangle on the screen.
+     * @param x1 X position of the first point
+     * @param y1 Y position of the first point
+     * @param x2 X position of the second point
+     * @param y2 Y position of the second point
+     * @param x3 X position of the third point
+     * @param y3 Y position of the third point
+     */
     public static void drawTriangle(float x1, float y1, float x2, float y2, float x3, float y3) {
         // Draw a triangle with the given x and y coordinates
         glBegin(GL_TRIANGLES);
@@ -68,42 +92,13 @@ public class RenderUtils {
         glEnd();
     }
 
-    public static void drawRoundedSquare(float x, float y, float width, float height, float radius, Color color) {
-        float halfSizeX = width / 2.0f;
-        float halfSizeY = halfSizeX / 2.0f;
-        float x1 = x + radius;
-        float x2 = x + halfSizeX;
-        float x3 = x + width - radius;
-        float y1 = y + radius;
-        float y2 = y + halfSizeY;
-        float y3 = y + height - radius;
-
-        glBegin(GL_POLYGON); // begin drawing a rounded square
-        glColor3f(color.getRed(), color.getGreen(), color.getBlue()); // set the color of the rounded square
-
-        // draw the rounded corners
-        for (int i = 0; i < 90; i++) {
-            float angle = i * (float)Math.PI / 180.0f;
-            float dx = radius * (float)Math.cos(angle);
-            float dy = radius * (float)Math.sin(angle);
-            glVertex3f(x1 + dx, y1 + dy, 0.0f);
-            glVertex3f(x2 + dy, y1 + dx, 0.0f);
-            glVertex3f(x3 - dx, y1 + dy, 0.0f);
-            glVertex3f(x3 - dy, y2 + dx, 0.0f);
-            glVertex3f(x3 - dx, y3 - dy, 0.0f);
-            glVertex3f(x2 + dy, y3 - dx, 0.0f);
-            glVertex3f(x1 + dx, y3 - dy, 0.0f);
-            glVertex3f(x1 + dy, y2 - dx, 0.0f);
-        }
-
-        // draw the straight sides
-        glVertex3f(x1, y1 - radius, 0.0f);
-        glVertex3f(x3, y1 - radius, 0.0f);
-        glVertex3f(x3, y3 + radius, 0.0f);
-        glVertex3f(x1, y3 + radius, 0.0f);
-        glEnd(); // end drawing the rounded square
-    }
-
+    /**
+     * Draw a square on the screen.
+     * @param x X position of the square
+     * @param y Y position of the square
+     * @param size Size of the square
+     * @param color Color of the square
+     */
     public static void drawSquare(float x, float y, float size, Color color) {
         glColor3f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f); // Set the color
         glBegin(GL_QUADS);
@@ -114,10 +109,18 @@ public class RenderUtils {
         glEnd();
     }
 
-    public static void drawTexturedRect(float x, float y, float width, float height, Texture texture) {
+    /**
+     * Draw a textured rectangle on the screen.
+     * @param x X position of the rectangle
+     * @param y Y position of the rectangle
+     * @param width Width of the rectangle
+     * @param height Height of the rectangle
+     * @param texture Texture of the rectangle (see {@link me.hades.render.utils.TextureLoader})
+     */
+    public static void drawTexturedRect(float x, float y, float width, float height, int texture) {
         // Bind the texture
         glEnable(GL_TEXTURE_2D); // Enable 2D texturing
-        texture.bind();
+        glBindTexture(GL_TEXTURE_2D, texture);
 
         // Set the color to white
         glColor3f(1, 1, 1);
@@ -135,28 +138,88 @@ public class RenderUtils {
         glEnd();
 
         // Unbind the texture
-        texture.unbind();
+        glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_TEXTURE_2D); // Disable 2D texturing
     }
 
-    public static void drawTexturedRectPixel(float x, float y, float width, float height, Texture texture) {
-        // Bind the texture
-        texture.bind();
+    /**
+     * Draw a rectangle with rounded corners on the screen.
+     * @param x X position of the rectangle
+     * @param y Y position of the rectangle
+     * @param width Width of the rectangle
+     * @param height Height of the rectangle
+     * @param color Color of the rectangle
+     * @param cornerRadius Radius of the corners
+     */
+    public static void drawRectWithRoundedCorners(float x, float y, float width, float height, Color color, float cornerRadius) {
+        // Disable blending
+        glDisable(GL_BLEND);
+        // Turn on anti-aliasing
+        glEnable(GL_POINT_SMOOTH);
+        // Enable use of alpha function
+        glEnable(GL_ALPHA_TEST);
+        // Alpha comparison
+        glAlphaFunc(GL_GREATER, 0.5f);
 
-        // Draw the textured rectangle
+        // Set the line width for drawing corners
+        glLineWidth(2.0f);
+
+        // Set the color
+        glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+
+        // Draw the central rectangle
         glBegin(GL_QUADS);
-        glTexCoord2f(0, 0);
-        glVertex2f(x, y);
-        glTexCoord2f(1, 0);
-        glVertex2f(x + width, y);
-        glTexCoord2f(1, 1);
-        glVertex2f(x + width, y + height);
-        glTexCoord2f(0, 1);
-        glVertex2f(x, y + height);
+        glVertex2f(x + cornerRadius, y);
+        glVertex2f(x + width - cornerRadius, y);
+        glVertex2f(x + width - cornerRadius, y + height);
+        glVertex2f(x + cornerRadius, y + height);
         glEnd();
 
-        // Unbind the texture
-        texture.unbind();
+        // Draw the rounded corners using circles
+        for (int i = 0; i < 4; i++) {
+            float centerX, centerY;
+
+            if (i == 0) {
+                centerX = x + cornerRadius;
+                centerY = y + cornerRadius;
+            } else if (i == 1) {
+                centerX = x + width - cornerRadius;
+                centerY = y + cornerRadius;
+            } else if (i == 2) {
+                centerX = x + cornerRadius;
+                centerY = y + height - cornerRadius;
+            } else {
+                centerX = x + width - cornerRadius;
+                centerY = y + height - cornerRadius;
+            }
+
+            glBegin(GL_LINE_LOOP);
+            for (int j = 0; j < 360; j++) {
+                float angle = (float) Math.toRadians(j);
+                float xVertex = centerX + (float) Math.cos(angle) * cornerRadius;
+                float yVertex = centerY + (float) Math.sin(angle) * cornerRadius;
+                glVertex2f(xVertex, yVertex);
+            }
+            glEnd();
+        }
+
+        // Draw the horizontal and vertical lines
+        glBegin(GL_LINES);
+        glVertex2f(x + cornerRadius, y);
+        glVertex2f(x + width - cornerRadius, y);
+
+        glVertex2f(x + cornerRadius, y + height);
+        glVertex2f(x + width - cornerRadius, y + height);
+
+        glVertex2f(x, y + cornerRadius);
+        glVertex2f(x, y + height - cornerRadius);
+
+        glVertex2f(x + width, y + cornerRadius);
+        glVertex2f(x + width, y + height - cornerRadius);
+        glEnd();
+
+        glDisable(GL_ALPHA_TEST);
+        glDisable(GL_POINT_SMOOTH);
     }
 
 

@@ -11,12 +11,14 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.*;
 
 public abstract class GuiScreen {
-    private List<GuiElement> elements;
-    private int activeGuiIndex = -1;
+    private final List<GuiElement> elements;
 
     public GuiScreen() {
         elements = new ArrayList<>();
+        init();
     }
+
+    public void init() {}
 
     public void drawScreen() {
         GL11.glClearColor(1, 1, 1, 1);
@@ -58,17 +60,17 @@ public abstract class GuiScreen {
     }
 
     public void handleMouseInput() {
-        int width = (int) Window.getWidth();
-        int height = (int) Window.getHeight();
+        int width = Window.getWidth();
+        int height = Window.getHeight();
         int i = Mouse.getEventX() *  width / width;
         int j = height - Mouse.getEventY() * height / height - 1;
-        int k = Mouse.getEventButton();
+        int button = Mouse.getEventButton();
 
         if(Mouse.getEventButtonState()) {
-            mouseClicked(i, j, k);
+            mouseClicked(i, j, button);
         }
-        else if(k != -1) {
-            mouseReleased(i, j, k);
+        else if(button != -1) {
+            mouseReleased(i, j, button);
         }
     }
 

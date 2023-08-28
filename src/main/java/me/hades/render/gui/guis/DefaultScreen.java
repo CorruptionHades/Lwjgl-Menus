@@ -2,25 +2,34 @@ package me.hades.render.gui.guis;
 
 import me.hades.render.gui.GuiScreen;
 import me.hades.render.utils.RenderUtils;
-import org.lwjgl.input.Mouse;
+import me.hades.render.utils.TextureLoader;
 
 import java.awt.*;
 
 public class DefaultScreen extends GuiScreen {
 
-    private boolean dragging;
-    private float x, y, dragX, dragY;
+    private int stoneTexture;
+
+    @Override
+    public void init() {
+        stoneTexture = TextureLoader.getInstance().loadTexture("src/main/resources/textures/stone.png");
+    }
 
     @Override
     public void drawScreen() {
         super.drawScreen();
 
-        if(dragging) {
-            x = dragX - Mouse.getX();
-            y = dragY - Mouse.getY();
-        }
+        RenderUtils.drawSquare(20, 20, 50, Color.cyan);
+        RenderUtils.drawSquare(80, 20, 50, 30, Color.cyan);
+        RenderUtils.drawString("This is a String", 140, 20, Color.cyan);
 
-        RenderUtils.drawSquare(x, y, 50, Color.cyan);
+        RenderUtils.drawCircle(330, 50, 30);
+
+        RenderUtils.drawTriangle(380, 50, 440, 50, 410, 20);
+
+        RenderUtils.drawRectWithRoundedCorners(500, 20, 50, 50, Color.CYAN, 10);
+
+        RenderUtils.drawTexturedRect(600, 20, 50, 50, stoneTexture);
     }
 
     @Override
@@ -28,9 +37,6 @@ public class DefaultScreen extends GuiScreen {
 
         if(isInside(mouseX, mouseY, 10, 10, 50, 50) && button == 0) {
             System.out.println("Clicked!");
-            dragging = true;
-            dragX = (float) (mouseX - x);
-            dragY = (float) (mouseY - y);
         }
 
         super.mouseClicked(mouseX,mouseY, button);
@@ -38,13 +44,11 @@ public class DefaultScreen extends GuiScreen {
 
     @Override
     public void mouseReleased(double x, double y, int button) {
-        dragging = false;
         super.mouseReleased(x, y, button);
     }
 
     @Override
     public void keyTyped(char key, int keyCode) {
-        System.out.println(key);
         super.keyTyped(key, keyCode);
     }
 }

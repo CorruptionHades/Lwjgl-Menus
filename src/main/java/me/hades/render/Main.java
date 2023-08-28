@@ -11,17 +11,16 @@ public class Main {
     public static void main(String[] args) {
         Window window = new Window();
         try {
-            window.setCurrentScreen(new DefaultScreen());
             window.createWindow("Test Window", 1000, 500, true);
+            window.setCurrentScreen(new DefaultScreen());
         } catch (LWJGLException e) {
             e.printStackTrace();
         }
 
-        Scanner sc = new Scanner(System.in);
-        while (true) {
+        while (!Thread.interrupted()) {
             window.loop();
         }
 
-       // window.close();
+        window.close();
     }
 }
