@@ -6,6 +6,10 @@ import me.hades.render.utils.TextureLoader;
 
 import java.awt.*;
 
+/**
+ * @author CorruptionHades
+ * @implNote A default screen with some example rendering
+ */
 public class DefaultScreen extends GuiScreen {
 
     private int stoneTexture;
@@ -23,7 +27,7 @@ public class DefaultScreen extends GuiScreen {
         RenderUtils.drawSquare(80, 20, 50, 30, Color.cyan);
         RenderUtils.drawString("This is a String", 140, 20, Color.cyan);
 
-        RenderUtils.drawCircle(330, 50, 30);
+        RenderUtils.drawCircleOutline(330, 50, 30);
 
         RenderUtils.drawTriangle(380, 50, 440, 50, 410, 20);
 
@@ -45,10 +49,12 @@ public class DefaultScreen extends GuiScreen {
     @Override
     public void mouseReleased(double x, double y, int button) {
         super.mouseReleased(x, y, button);
+        System.out.println("Released Mouse!");
     }
 
     @Override
     public void keyTyped(char key, int keyCode) {
         super.keyTyped(key, keyCode);
+        System.out.println("Pressed key: " + key + "(" + keyCode + ")");
     }
 }

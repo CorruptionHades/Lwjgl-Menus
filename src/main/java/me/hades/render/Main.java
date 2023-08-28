@@ -4,23 +4,24 @@ import me.hades.render.gui.guis.DefaultScreen;
 import me.hades.render.render.Window;
 import org.lwjgl.LWJGLException;
 
-import java.util.Scanner;
-
 public class Main {
 
-    public static void main(String[] args) {
-        Window window = new Window();
-        try {
-            window.createWindow("Test Window", 1000, 500, true);
-            window.setCurrentScreen(new DefaultScreen());
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-        }
+    public static Window window;
 
+    public static void main(String[] args) throws LWJGLException {
+        // Instantiate the window
+        window = new Window();
+        // Create the window
+        window.createWindow("Test Window", 1000, 500, true);
+        // Set the current screen to the default screen
+        window.setCurrentScreen(new DefaultScreen());
+
+        // Loop until the window is closed
         while (!Thread.interrupted()) {
             window.loop();
         }
 
+        // Close the window
         window.close();
     }
 }

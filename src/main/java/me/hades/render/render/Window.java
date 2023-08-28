@@ -11,15 +11,9 @@ import org.lwjgl.opengl.PixelFormat;
 
 public class Window {
 
-    private static Window INSTANCE;
-
-    private static int width, height;
+    private int width, height;
 
     private GuiScreen currentScreen;
-
-    public Window() {
-        INSTANCE = this;
-    }
 
     public void createWindow(String title, int width, int height, boolean resizable) throws LWJGLException {
         this.width = width;
@@ -56,7 +50,7 @@ public class Window {
         currentScreen.drawScreen();
 
         while (Mouse.next()) {
-            currentScreen.handleMouseInput();
+            currentScreen.handleMouseInput(this);
         }
 
         while (Keyboard.next()) {
@@ -75,15 +69,11 @@ public class Window {
         this.currentScreen = screen;
     }
 
-    public static int getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public static int getHeight() {
+    public int getHeight() {
         return height;
-    }
-
-    public static Window getINSTANCE() {
-        return INSTANCE;
     }
 }

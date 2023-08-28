@@ -14,11 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class TextureLoader {
 
-    private static final int BYTES_PER_PIXEL = 4;//3 for RGB, 4 for RGBA
     private static TextureLoader instance;
-
-    private TextureLoader() {
-    }
 
     public static TextureLoader getInstance() {
         if (instance == null) {
@@ -35,6 +31,11 @@ public class TextureLoader {
      */
     public int loadTexture(String loc) {
         BufferedImage image = loadImage(loc);
+
+        if(image == null) {
+            return -1;
+        }
+
         int[] pixels = new int[image.getWidth() * image.getHeight()];
         image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
 

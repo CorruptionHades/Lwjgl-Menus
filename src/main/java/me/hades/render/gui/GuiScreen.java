@@ -28,12 +28,6 @@ public abstract class GuiScreen {
         }
     }
 
-    public void update() {
-        for (GuiElement element : elements) {
-            element.update();
-        }
-    }
-
     public void mouseClicked(double x, double y, int button) {
         for (GuiElement element : elements) {
             element.mousePressed(x, y, button);
@@ -59,9 +53,9 @@ public abstract class GuiScreen {
         elements.add(element);
     }
 
-    public void handleMouseInput() {
-        int width = Window.getWidth();
-        int height = Window.getHeight();
+    public void handleMouseInput(Window window) {
+        int width = window.getWidth();
+        int height = window.getHeight();
         int i = Mouse.getEventX() *  width / width;
         int j = height - Mouse.getEventY() * height / height - 1;
         int button = Mouse.getEventButton();

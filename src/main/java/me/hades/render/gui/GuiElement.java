@@ -13,8 +13,6 @@ public abstract class GuiElement {
 
     public abstract void render();
 
-    public abstract void update();
-
     public abstract void mousePressed(double x, double y, int button);
 
     public abstract void mouseReleased(double x, double y, int button);

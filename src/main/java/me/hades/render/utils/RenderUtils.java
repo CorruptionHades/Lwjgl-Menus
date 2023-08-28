@@ -56,20 +56,27 @@ public class RenderUtils {
     }
 
     /**
-     * Draw a circle on the screen.
+     * Draws a circle outline on the screen.
      * @param x X position of the circle
      * @param y Y position of the circle
      * @param radius Radius of the circle
      */
-    public static void drawCircle(float x, float y, float radius) {
+    public static void drawCircleOutline(float x, float y, float radius) {
         // Draw a circle with the given x, y, and radius
         int numSegments = 32;
         glBegin(GL_LINE_LOOP);
         for (int i = 0; i < numSegments; i++) {
-            float theta = 2.0f * (float) Math.PI * (float) i / (float) numSegments;
-            float x_ = (float) (x + radius * Math.cos(theta));
-            float y_ = (float) (y + radius * Math.sin(theta));
-            glVertex3f(x_, y_, 0);
+            float theta1 = 2.0f * (float) Math.PI * (float) i / (float) numSegments;
+            float theta2 = 2.0f * (float) Math.PI * (float) (i + 1) / (float) numSegments;
+
+            float x1 = (float) (x + radius * Math.cos(theta1));
+            float y1 = (float) (y + radius * Math.sin(theta1));
+
+            float x2 = (float) (x + radius * Math.cos(theta2));
+            float y2 = (float) (y + radius * Math.sin(theta2));
+
+            glVertex3f(x1, y1, 0);
+            glVertex3f(x2, y2, 0);
         }
         glEnd();
     }
