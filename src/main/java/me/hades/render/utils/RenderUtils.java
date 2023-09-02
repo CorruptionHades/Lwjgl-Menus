@@ -10,8 +10,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class RenderUtils {
 
-    private static final Font awtFont = new Font("default", Font.PLAIN, 20);
-    private static final TrueTypeFont font = new TrueTypeFont(awtFont, true);
+    private static Font awtFont;
+    private static TrueTypeFont font;
 
     private static void enableStuff() {
         glEnable(GL_BLEND);
@@ -48,10 +48,13 @@ public class RenderUtils {
      * @param color Color of the text
      */
      public static void drawString(String text, int x, int y, Color color) {
+         if(awtFont == null) {
+             awtFont = new Font("default", Font.PLAIN, 20);
+         }
         glEnable(3042);
         glBlendFunc(770, 771);
         glPushMatrix();
-        FontUtils.drawString(font, text, 1, x, y, 10, new org.newdawn.slick.Color(color.getRed(), color.getGreen(), color.getBlue()));
+        FontUtils.drawString(new TrueTypeFont(awtFont, true), text, 1, x, y, 10, new org.newdawn.slick.Color(color.getRed(), color.getGreen(), color.getBlue()));
         glDisable(3553);
         glPopMatrix();
     }
