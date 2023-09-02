@@ -47,7 +47,8 @@ public class Window {
         }
 
         Display.update();
-        currentScreen.drawScreen();
+
+        currentScreen.drawScreen(MouseHelper.getX(this), MouseHelper.getY(this));
 
         while (Mouse.next()) {
             currentScreen.handleMouseInput(this);

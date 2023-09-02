@@ -11,7 +11,7 @@ public abstract class GuiElement {
         this.height = height;
     }
 
-    public abstract void render();
+    public abstract void render(int mouseX, int mouseY);
 
     public abstract void mousePressed(double x, double y, int button);
 

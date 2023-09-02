@@ -10,6 +10,9 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class RenderUtils {
 
+    private static final Font awtFont = new Font("default", Font.PLAIN, 20);
+    private static final TrueTypeFont font = new TrueTypeFont(awtFont, true);
+
     private static void enableStuff() {
         glEnable(GL_BLEND);
         glMatrixMode(GL_MODELVIEW);
@@ -48,8 +51,6 @@ public class RenderUtils {
         glEnable(3042);
         glBlendFunc(770, 771);
         glPushMatrix();
-        Font awtFont = new Font("default", Font.PLAIN, 20);
-        TrueTypeFont font = new TrueTypeFont(awtFont, true);
         FontUtils.drawString(font, text, 1, x, y, 10, new org.newdawn.slick.Color(color.getRed(), color.getGreen(), color.getBlue()));
         glDisable(3553);
         glPopMatrix();

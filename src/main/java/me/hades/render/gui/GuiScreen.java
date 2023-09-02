@@ -11,20 +11,21 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.*;
 
 public abstract class GuiScreen {
-    private final List<GuiElement> elements;
+    private List<GuiElement> elements;
 
     public GuiScreen() {
-        elements = new ArrayList<>();
         init();
     }
 
-    public void init() {}
+    public void init() {
+        elements = new ArrayList<>();
+    }
 
-    public void drawScreen() {
+    public void drawScreen(int mouseX, int mouseY) {
         GL11.glClearColor(1, 1, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         for (GuiElement element : elements) {
-            element.render();
+            element.render(mouseX, mouseY);
         }
     }
 
