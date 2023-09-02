@@ -14,6 +14,8 @@ public class DefaultScreen extends GuiScreen {
 
     private int stoneTexture;
 
+    private Color squareColor = Color.cyan;
+
     @Override
     public void init() {
         stoneTexture = TextureLoader.getInstance().loadTexture("src/main/resources/textures/stone.png");
@@ -23,7 +25,7 @@ public class DefaultScreen extends GuiScreen {
     public void drawScreen() {
         super.drawScreen();
 
-        RenderUtils.drawSquare(20, 20, 50, Color.cyan);
+        RenderUtils.drawSquare(20, 20, 50, squareColor);
         RenderUtils.drawSquare(80, 20, 50, 30, Color.cyan);
         RenderUtils.drawString("This is a String", 140, 20, Color.cyan);
 
@@ -40,7 +42,12 @@ public class DefaultScreen extends GuiScreen {
     public void mouseClicked(double mouseX, double mouseY, int button) {
 
         if(isInside(mouseX, mouseY, 10, 10, 50, 50) && button == 0) {
-            System.out.println("Clicked!");
+            if(squareColor == Color.cyan) {
+                squareColor = Color.red;
+            }
+            else {
+                squareColor = Color.cyan;
+            }
         }
 
         super.mouseClicked(mouseX,mouseY, button);
@@ -49,7 +56,6 @@ public class DefaultScreen extends GuiScreen {
     @Override
     public void mouseReleased(double x, double y, int button) {
         super.mouseReleased(x, y, button);
-        System.out.println("Released Mouse!");
     }
 
     @Override

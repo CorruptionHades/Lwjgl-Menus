@@ -6,7 +6,7 @@ It has a Minecraft like(Gui)Screen system which allows switching screens.
 
 Supports:
 - Squares
-- Cirlces
+- Circles
 - Triangles
 - Text
 - Textures
