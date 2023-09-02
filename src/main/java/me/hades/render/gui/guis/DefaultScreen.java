@@ -1,9 +1,9 @@
 package me.hades.render.gui.guis;
 
 import me.hades.render.gui.GuiScreen;
+import me.hades.render.render.Window;
 import me.hades.render.utils.RenderUtils;
 import me.hades.render.utils.TextureLoader;
-import org.lwjgl.input.Mouse;
 
 import java.awt.*;
 
@@ -22,6 +22,10 @@ public class DefaultScreen extends GuiScreen {
     boolean dragging = false;
     int squareX = 0, squareY = 50;
     int dragX = 0, dragY = 0;
+
+    public DefaultScreen(Window window) {
+        super(window);
+    }
 
     @Override
     public void init() {
@@ -46,8 +50,26 @@ public class DefaultScreen extends GuiScreen {
 
         // for dragging
         if(dragging) {
-            squareX = mouseX - dragX;
-            squareY = mouseY - dragY;
+
+            int newX = mouseX - dragX;
+            int newY = mouseY - dragY;
+
+            if(newX < 0) {
+                newX = 0;
+            }
+            if(newX > window.getWidth() - 50) {
+                newX = window.getWidth() - 50;
+            }
+
+            if(newY < 0) {
+                newY = 0;
+            }
+            if(newY > window.getHeight() - 50) {
+                newY = window.getHeight() - 50;
+            }
+
+            squareX = newX;
+            squareY = newY;
         }
 
         RenderUtils.drawSquare(squareX, squareY, 50, 50, squareColor);
@@ -75,8 +97,8 @@ public class DefaultScreen extends GuiScreen {
     }
 
     @Override
-    public void mouseReleased(double x, double y, int button) {
-        super.mouseReleased(x, y, button);
+    public void mouseReleased(double mouseX, double mouseY, int button) {
+        super.mouseReleased(mouseX, mouseY, button);
         dragging = false;
     }
 

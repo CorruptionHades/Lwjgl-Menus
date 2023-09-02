@@ -14,7 +14,7 @@ public class Main {
         // Create the window
         window.createWindow("Test Window", 1000, 500, true);
         // Set the current screen to the default screen
-        window.setCurrentScreen(new DefaultScreen());
+        window.setCurrentScreen(new DefaultScreen(window));
 
         // Loop until the window is closed
         while (!Thread.interrupted()) {

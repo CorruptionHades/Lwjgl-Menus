@@ -11,15 +11,18 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.*;
 
 public abstract class GuiScreen {
-    private List<GuiElement> elements;
 
-    public GuiScreen() {
+    private final List<GuiElement> elements;
+
+    protected final Window window;
+
+    public GuiScreen(Window window) {
+        this.window = window;
+        elements = new ArrayList<>();
         init();
     }
 
-    public void init() {
-        elements = new ArrayList<>();
-    }
+    public void init() {}
 
     public void drawScreen(int mouseX, int mouseY) {
         GL11.glClearColor(1, 1, 1, 1);
@@ -29,15 +32,15 @@ public abstract class GuiScreen {
         }
     }
 
-    public void mouseClicked(double x, double y, int button) {
+    public void mouseClicked(double mouseX, double mouseY, int button) {
         for (GuiElement element : elements) {
-            element.mousePressed(x, y, button);
+            element.mousePressed(mouseX, mouseY, button);
         }
     }
 
-    public void mouseReleased(double x, double y, int button) {
+    public void mouseReleased(double mouseX, double mouseY, int button) {
         for (GuiElement element : elements) {
-            element.mouseReleased(x, y, button);
+            element.mouseReleased(mouseX, mouseY, button);
         }
     }
 
@@ -75,9 +78,15 @@ public abstract class GuiScreen {
         }
     }
 
-    public void close() {}
+    public void close() {
+        window.setCurrentScreen(window.getPreviousScreen());
+    }
 
     public boolean isInside(double mouseX, double mouseY, float x, float y, float width, float height) {
         return (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height);
+    }
+
+    public Window getWindow() {
+        return window;
     }
 }

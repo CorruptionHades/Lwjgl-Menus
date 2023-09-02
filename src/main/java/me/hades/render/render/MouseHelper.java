@@ -4,11 +4,11 @@ import org.lwjgl.input.Mouse;
 
 public class MouseHelper {
 
-    public static int getX(Window window) {
+    public int getX(Window window) {
         return Mouse.getEventX() * window.getWidth() / window.getWidth();
     }
 
-    public static int getY(Window window) {
+    public int getY(Window window) {
         return window.getHeight() - Mouse.getEventY() * window.getHeight() / window.getHeight() - 1;
     }
 }

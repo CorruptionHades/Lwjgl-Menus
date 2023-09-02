@@ -13,7 +13,8 @@ public class Window {
 
     private int width, height;
 
-    private GuiScreen currentScreen;
+    private GuiScreen currentScreen, previousScreen;
+    private final MouseHelper mouseHelper = new MouseHelper();
 
     public void createWindow(String title, int width, int height, boolean resizable) throws LWJGLException {
         this.width = width;
@@ -47,8 +48,7 @@ public class Window {
         }
 
         Display.update();
-
-        currentScreen.drawScreen(MouseHelper.getX(this), MouseHelper.getY(this));
+        currentScreen.drawScreen(mouseHelper.getX(this), mouseHelper.getY(this));
 
         while (Mouse.next()) {
             currentScreen.handleMouseInput(this);
@@ -67,6 +67,12 @@ public class Window {
     }
 
     public void setCurrentScreen(GuiScreen screen) {
+
+        if(screen == null) {
+            throw new NullPointerException("Screen cannot be null!");
+        }
+
+        this.previousScreen = this.currentScreen;
         this.currentScreen = screen;
     }
 
@@ -76,5 +82,17 @@ public class Window {
 
     public int getHeight() {
         return height;
+    }
+
+    public GuiScreen getCurrentScreen() {
+        return currentScreen;
+    }
+
+    public GuiScreen getPreviousScreen() {
+        return previousScreen;
+    }
+
+    public MouseHelper getMouseHelper() {
+        return mouseHelper;
     }
 }
