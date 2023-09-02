@@ -11,3 +11,8 @@ Supports:
 - Text
 - Textures
 - Rounded Rects
+
+Small showcase:
+
+https://github.com/CorruptionHades/Lwjgl-Menus/assets/96599430/414f4fe3-8f3b-4bc5-80a9-120aaf43d98f
+
