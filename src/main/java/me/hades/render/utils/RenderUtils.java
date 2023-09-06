@@ -1,7 +1,10 @@
 package me.hades.render.utils;
 
 import me.hades.render.render.Window;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.util.FontUtils;
 
 import java.awt.*;
@@ -11,7 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class RenderUtils {
 
     private static Font awtFont;
-    private static TrueTypeFont font;
+    private static UnicodeFont font;
 
     private static void enableStuff() {
         glEnable(GL_BLEND);
@@ -48,13 +51,24 @@ public class RenderUtils {
      * @param color Color of the text
      */
      public static void drawString(String text, int x, int y, Color color) {
-         if(awtFont == null) {
-             awtFont = new Font("default", Font.PLAIN, 20);
+         if(font == null) {
+             System.out.println("Creating the font...");
+             awtFont = new Font("arial", Font.PLAIN, 20);
+             font = new UnicodeFont(awtFont);
+             font.addAsciiGlyphs();
+             font.getEffects().add(new ColorEffect(java.awt.Color.BLACK));
+             try {
+                 font.loadGlyphs();
+             } catch (SlickException e) {
+                 e.printStackTrace();
+             }
+             System.out.println("Font created successfully.");
          }
+
         glEnable(3042);
         glBlendFunc(770, 771);
         glPushMatrix();
-        FontUtils.drawString(new TrueTypeFont(awtFont, true), text, 1, x, y, 10, new org.newdawn.slick.Color(color.getRed(), color.getGreen(), color.getBlue()));
+        font.drawString(x, y, text, new org.newdawn.slick.Color(color.getRed(), color.getGreen(), color.getBlue()));
         glDisable(3553);
         glPopMatrix();
     }
@@ -136,6 +150,12 @@ public class RenderUtils {
         // Set the color to white
         glColor3f(1, 1, 1);
 
+        // Apply a 180-degree rotation around the Y-axis
+        glPushMatrix();
+        glTranslatef(x + width / 2, y + height / 2, 0);
+        glRotatef(180, 1, 0, 0);
+        glTranslatef(-(x + width / 2), -(y + height / 2), 0);
+
         // Draw the rectangle with texture coordinates
         glBegin(GL_QUADS);
         glTexCoord3f(0, 1, 0);  // Flip the y-coordinate here
@@ -147,6 +167,9 @@ public class RenderUtils {
         glTexCoord3f(0, 0, 0);  // Flip the y-coordinate here
         glVertex3f(x, y + height, 0);
         glEnd();
+
+        // Restore the transformation matrix
+        glPopMatrix();
 
         // Unbind the texture
         glBindTexture(GL_TEXTURE_2D, 0);
